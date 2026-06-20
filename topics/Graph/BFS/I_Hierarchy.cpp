@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+     int n , k; cin >> n >> k;
+
+    vector <vector<int>> adj(n + 1 , vector <int> ());
+    vector <int> inDegree(n + 1);
+
+    for (int i = 1; i <= k; ++i) {
+        int sz; cin >> sz;
+        while (sz--) {
+            int u; cin >> u;
+            adj[i].push_back(u);
+            inDegree[u]++;
+        }
+    }
+
+    int boss = 0;
+    for (int i = 1; i <= k; ++i) {
+        if(!inDegree[i]) {
+            boss = i;
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        if(i != boss and !inDegree[i]) {
+            adj[boss].push_back(i);
+            inDegree[i]++;
+        }
+    }
+
+    vector<int> vis(n + 1 , 0);
+
+    vector <int> topo;
+    queue <int> q;
+    q.push(boss);
+    topo.push_back(0);
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        topo.push_back(u);
+
+        for (int v : adj[u]) {
+            inDegree[v]--;
+            if(!inDegree[v]) {
+                q.push(v);
+            }
+        }
+    }
+
+    vector <int> par(n + 1);
+
+
+    for (int i = 1; i <= n; ++i) {
+        par[topo[i]] = topo[i - 1];
+    }
+    for (int i = 1; i <= n; ++i) {
+        cout << par[i] << '\n';
+    }
+}

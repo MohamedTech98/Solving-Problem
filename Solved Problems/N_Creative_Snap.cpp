@@ -1,8 +1,4 @@
-#include<iostream>
-#include<vector>
-#include<set>
-#include<map>
-#include<algorithm>
+#include<bits/stdc++.h>
 
 #define ll long long
 #define endl '\n'
